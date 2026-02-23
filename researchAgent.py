@@ -20,22 +20,24 @@ else:
 
 @function_tool
 def tavily_search(params: TavilySearchParams) -> str:
+    try:
+        url = TAVILY_SEARCH_URL
+        headers = {"Content-Type": "application/json"}
+        payload = {
+            "api_key": tavily_api_key,
+            "query": params["query"],
+            "max_results": params.get("max_results", 3),
+        }
 
-    url = TAVILY_SEARCH_URL
-    headers = {"Content-Type": "application/json"}
-    payload = {
-        "api_key": tavily_api_key,
-        "query": params["query"],
-        "max_results": params.get("max_results", 3),
-    }
-
-    response = requests.post(url, json = payload, headers = headers)
-    if response.status_code == 200:
-        results = response.json().get("results", [])
-        summary = "\n".join([f"- {r['title']}: {r['content']}" for r in results])
-        return summary if summary else "No relevant results found."
-    else:
-        return f"Tavily API error: {response.status_code}"
+        response = requests.post(url, json = payload, headers = headers, timeout=60)
+        if response.status_code == 200:
+            results = response.json().get("results", [])
+            summary = "\n".join([f"- {r['title']}: {r['content']}" for r in results])
+            return summary if summary else "No relevant results found."
+        else:
+            return f"Tavily API error: {response.status_code}"
+    except Exception as e:
+        return f"Error calling Tavily API: {str(e)}"
 
 # ------------------------------------------------------------------
 # Define the Researcher Agent

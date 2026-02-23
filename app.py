@@ -2,9 +2,6 @@ import os, asyncio
 from colorama import Fore, Style, init
 from dotenv import load_dotenv
 from agents import Runner, SQLiteSession
-from researchAgent import getResearcherAgent
-from analystAgent import getAnalystAgent
-from writerAgent import getWriterAgent
 from dataModels import FinalReport
 
 # ------------------------------------------------------------------
@@ -20,10 +17,23 @@ if not openai_api_key:
 else:
     print(f""" {Fore.GREEN} ➡️ OPENAI API key loaded successfully. ✅ {Style.RESET_ALL}""")
 
+# -------------------------------------------------------------------
+# Initialize SQLite session for agent memory
+# -------------------------------------------------------------------
+session = SQLiteSession("research_agent_practice")
+print(f" {Fore.GREEN} ➡️ SQLite session initialized successfully! ✅ {Style.RESET_ALL}")
+
+# ------------------------------------------------------------------
+# Load Agents
+# ------------------------------------------------------------------
+from researchAgent import getResearcherAgent
+from analystAgent import getAnalystAgent
+from writerAgent import getWriterAgent
+print(f" {Fore.GREEN} ➡️ All agents loaded successfully! ✅ {Style.RESET_ALL}")
+
 # ---------------------------------------------------------------------------
 # Orchestrating function to run the agents and pass information between them
 # ---------------------------------------------------------------------------
-session = SQLiteSession("research_agent_practice")
 async def main(user_query: str):
     try:
         # Step 1: Run the researcher agent to gather information about the user's query
@@ -66,16 +76,20 @@ async def main(user_query: str):
 
 if __name__ == "__main__":
     try:
-        print(f""" {Fore.CYAN}
+        print(f""" 
+            {Fore.CYAN}
                 --------------------------------------------------------------------------------------------------
-                 🙋🏻‍♂️ Welcome to the Research Agent! All agents are set up! ✅ 
-                --------------------------------------------------------------------------------------------------{Style.RESET_ALL}
+                 🙋🏻‍♂️ Welcome to the Research and Summary Agent! 
+                --------------------------------------------------------------------------------------------------
+            {Style.RESET_ALL}
             """)
         while True:
             user_query = input(f"{Fore.YELLOW}Enter your research query (or type 'exit' to quit): {Style.RESET_ALL}")
+
             if user_query.lower() == "exit":
-                print(f"{Fore.CYAN}Exiting the Research Agent ➡️  Clearing session memory ➡️  Goodbye! 👋{Style.RESET_ALL}")
+                print(f" {Fore.CYAN} Exiting the Research and Summary Agent ➡️  Clearing session memory ➡️  Goodbye! 👋{Style.RESET_ALL}")
                 break
+
             if not user_query.strip():
                 print(f"{Fore.RED}Please enter a valid query. ❌{Style.RESET_ALL}")
                 continue
