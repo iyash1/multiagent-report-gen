@@ -36,7 +36,7 @@ Executive Summary + Detailed Report + Follow-up Questions
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/iyash1/multiagent-report-gen.git
 cd multiagent-report-gen
 ```
 
