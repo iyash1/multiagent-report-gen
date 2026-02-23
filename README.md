@@ -84,16 +84,22 @@ The system will:
 
 ## 🔧 Configuration
 
-All agent models use `gpt-4.1-mini`. To change models, edit the `model` parameter in each agent definition in `app.py`.
+All agent models use `gpt-4.1-mini`. To change models, edit the `GPT_MODEL_4` constant in `constants.py`.
 
 ## 📂 Project Structure
 
 ```
 multiagent-report-gen/
-├── app.py              # Main application
-├── requirements.txt    # Python dependencies
-├── .env                # Environment variables
-└── README.md           # This file
+├── app.py                 # Main application orchestrator
+├── researchAgent.py       # Researcher agent with Tavily search
+├── analystAgent.py        # Analyst agent for trend analysis
+├── writerAgent.py         # Writer agent for report generation
+├── agents.py              # Agent framework and utilities
+├── dataModels.py          # Pydantic models for data validation
+├── constants.py           # Configuration constants
+├── requirements.txt       # Python dependencies
+├── .env                   # Environment variables (not committed)
+└── README.md              # This file
 ```
 
 ## ⚠️ Important Security Notes
@@ -111,3 +117,4 @@ multiagent-report-gen/
 ## 📝 License
 
 MIT License
+

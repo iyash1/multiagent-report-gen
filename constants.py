@@ -1,0 +1,5 @@
+GPT_MODEL_4="gpt-4.1-mini"
+RESEARCH_AGENT_NAME="Researcher"
+ANALYST_AGENT_NAME="Analyst"
+WRITER_AGENT_NAME="Writer"
+TAVILY_SEARCH_URL="https://api.tavily.com/search"
